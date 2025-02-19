@@ -14,4 +14,4 @@ with st.sidebar.expander("🎰 Casino"):
     st.page_link("pages/Casino.py", label="Home Page")
 
 st.page_link("pages/doesnt_follow.py", label="See Who Doesn't Follow You")
-st.page_link("SeeWhoDoesntFollowYou.py", label="Go Back")
+st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Go Back")
