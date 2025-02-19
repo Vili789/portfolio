@@ -21,3 +21,4 @@ st.navigation(
      "Flashcards": [Flashcards]
      }
     )
+pg.run()
