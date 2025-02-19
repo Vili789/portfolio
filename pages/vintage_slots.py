@@ -63,7 +63,7 @@ def spin_reels():
 
     # Check win condition (3 of a kind)
     if middle_row[0] == middle_row[1] == middle_row[2]:
-        st.session_state.balance += 10  # Increase balance
+        st.session_state.balance += 300 * st.session_state.bet_multiplier # Increase balance
         st.success("🎉 3 of a kind, YOU WIN!")
 
     # Update the reels in session state
