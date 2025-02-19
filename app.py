@@ -10,9 +10,6 @@ st.page_link("pages/SeeWhoDoesntFollowYou.py", label="📊 Instagram Analyzer")
 st.page_link("pages/FlashcardAutomation.py", label="🤖 Flashcard Automation Tool")
 st.page_link("pages/Casino.py", label="🎰 Casino Game")
 
-st.sidebar.page_link("pages/SeeWhoDoesntFollowYou.py", label="📊 Instagram Analyzer")
-st.sidebar.page_link("pages/FlashcardAutomation.py", label="🤖 Flashcard Automation Tool")
-
 with st.sidebar.expander("📊 Instagram Analyzer"):
     st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Home Page")
 
