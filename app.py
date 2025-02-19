@@ -6,16 +6,16 @@ st.title("👨‍💻 Welcome to My Portfolio")
 st.write("Hello! I'm [Your Name], a software developer. Here are some of my projects:")
 
 # Correcting the file paths
-st.page_link("pages/SeeWhoDoesntFollowYou.py", label="📊 Instagram Analyzer", in_navigation=False)
-st.page_link("pages/FlashcardAutomation.py", label="🤖 Flashcard Automation Tool", in_navigation=False)
-st.page_link("pages/Casino.py", label="🎰 Casino Game", in_navigation=False)
+st.page_link("pages/SeeWhoDoesntFollowYou.py", label="📊 Instagram Analyzer")
+st.page_link("pages/FlashcardAutomation.py", label="🤖 Flashcard Automation Tool")
+st.page_link("pages/Casino.py", label="🎰 Casino Game")
 
 with st.sidebar.expander("📊 Instagram Analyzer"):
-    st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Home Page", in_navigation=True)
+    st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Home Page")
 
 with st.sidebar.expander("🤖 Flashcard Automation Tool"):
-    st.page_link("pages/FlashcardAutomation.py", label="Home Page", in_navigation=True)
+    st.page_link("pages/FlashcardAutomation.py", label="Home Page")
     
 with st.sidebar.expander("🎰 Casino"):
-    st.page_link("pages/Casino.py", label="Home Page", in_navigation=True)
+    st.page_link("pages/Casino.py", label="Home Page")
 
