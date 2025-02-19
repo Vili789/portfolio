@@ -9,3 +9,16 @@ st.write("Hello! I'm [Your Name], a software developer. Here are some of my proj
 st.page_link("pages/SeeWhoDoesntFollowYou.py", label="📊 Instagram Analyzer")
 st.page_link("pages/FlashcardAutomation.py", label="🤖 Flashcard Automation Tool")
 st.page_link("pages/Casino.py", label="🎰 Casino Game")
+
+st.sidebar.page_link("pages/SeeWhoDoesntFollowYou.py", label="📊 Instagram Analyzer")
+st.sidebar.page_link("pages/FlashcardAutomation.py", label="🤖 Flashcard Automation Tool")
+
+with st.sidebar.expander("📊 Instagram Analyzer"):
+    st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Home Page")
+
+with st.sidebar.expander("🤖 Flashcard Automation Tool"):
+    st.page_link("pages/FlashcardAutomation.py", label="Home Page")
+    
+with st.sidebar.expander("🎰 Casino"):
+    st.page_link("pages/Casino.py", label="Home Page")
+
