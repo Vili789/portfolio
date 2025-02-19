@@ -19,3 +19,4 @@ st.write(
     This will be the page for the Online Casino! It's all under construction for now!
     """)
     
+st.page_link("pages/vintage_slots.py", label="Vintage Slots")
