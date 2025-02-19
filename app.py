@@ -11,11 +11,11 @@ st.page_link("pages/FlashcardAutomation.py", label="🤖 Flashcard Automation To
 st.page_link("pages/Casino.py", label="🎰 Casino Game", in_navigation=False)
 
 with st.sidebar.expander("📊 Instagram Analyzer"):
-    st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Home Page")
+    st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Home Page", in_navigation=True)
 
 with st.sidebar.expander("🤖 Flashcard Automation Tool"):
-    st.page_link("pages/FlashcardAutomation.py", label="Home Page")
+    st.page_link("pages/FlashcardAutomation.py", label="Home Page", in_navigation=True)
     
 with st.sidebar.expander("🎰 Casino"):
-    st.page_link("pages/Casino.py", label="Home Page")
+    st.page_link("pages/Casino.py", label="Home Page", in_navigation=True)
 
