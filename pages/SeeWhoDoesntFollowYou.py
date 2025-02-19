@@ -2,6 +2,9 @@ import streamlit as st
 
 st.set_page_config(page_title="Instagram Analyzer", page_icon="📊")
 
+with st.sidebar.expander("Welcome!"):
+    st.page_link("app.py", label="Intorduction")
+    
 with st.sidebar.expander("📊 Instagram Analyzer"):
     st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Home Page")
     st.page_link("pages/doesnt_follow.py", label="See Who Doesn't Follow You Back")
