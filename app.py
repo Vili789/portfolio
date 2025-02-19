@@ -11,7 +11,7 @@ st.page_link("pages/FlashcardAutomation.py", label="🤖 Flashcard Automation To
 st.page_link("pages/Casino.py", label="🎰 Casino Game")
 
 with st.sidebar.expander("Welcome!"):
-    st.page_link("App.py", label="Intorduction")
+    st.page_link("app.py", label="Intorduction")
     
 with st.sidebar.expander("📊 Instagram Analyzer"):
     st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Home Page")
