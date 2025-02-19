@@ -13,5 +13,5 @@ with st.sidebar.expander("🤖 Flashcard Automation Tool"):
 with st.sidebar.expander("🎰 Casino"):
     st.page_link("pages/Casino.py", label="Home Page")
 
-st.page_link("pages/doesnt_follow.py"", label="See Who Doesn't Follow You")
+st.page_link("pages/doesnt_follow.py", label="See Who Doesn't Follow You")
 st.page_link("SeeWhoDoesntFollowYou.py", label="Go Back")
