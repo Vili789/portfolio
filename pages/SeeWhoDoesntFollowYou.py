@@ -73,7 +73,7 @@ st.markdown(
         """
     )
 
-st.page_link("app.py", label="Compare Changes Over Time")
-st.page_link("app.py", label="See Who Doesn't Follow You")
+st.page_link("pages/doesnt_follow.py"", label="See Who Doesn't Follow You")
+st.page_link("pages/compare_changes.py", label="Compare Changes Over Time")
 st.page_link("app.py", label="Go Back")
 
