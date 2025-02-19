@@ -83,3 +83,6 @@ if uploaded_file:
 
         except Exception as e:
             st.error(f"Error reading file: {e}")
+
+st.page_link("pages/compare_changes.py", label="Compare Changes Over Time")
+st.page_link("pages/SeeWhoDoesntFollowYou.py", label="Go Back")
