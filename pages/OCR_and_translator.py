@@ -46,10 +46,9 @@ if os.path.exists("/usr/bin/tesseract"):  # Cloud/Linux
     pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
     
 # 📤 File Uploader
-uploaded_files = st.file_uploader("Upload PDF or Image", type=["pdf", "png", "jpg"])
+uploaded_files = st.file_uploader("Upload PDF or Image", type=["pdf", "png", "jpg"], accept_multiple_files=True)
 
-for image in uploaded_files:
-    page = pytesseract.image_to_pdf_or_hocr(image, extension='pdf', lang='nld')
-    pdf = PdfReader(io.BytesIO(page))
-    pdf_writer.add_page(pdf.pages[0])
-    text_on_page.append(PdfReader(io.BytesIO(page)).pages[0].extract_text())
+for uploaded_file in uploaded_files:
+    bytes_data = uploaded_file.read()
+    st.write("filename:", uploaded_file.name)
+    st.write(bytes_data)
