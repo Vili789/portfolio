@@ -61,14 +61,31 @@ def spin_reels():
         above_row.append(reel[above_position])
         below_row.append(reel[below_position])
 
-    # Check win condition (3 of a kind)
-    if middle_row[0] == middle_row[1] == middle_row[2]:
-        st.session_state.balance += 300 * int(st.session_state.bet_multiplier[0]) # Increase balance
-        st.success("🎉 3 of a kind, YOU WIN!")
+    # Count money bag symbols
+    moneybag_count = middle_row.count("💰")
 
-    # Update the reels in session state
-    st.session_state.reels = [above_row, middle_row, below_row]
-    st.rerun()  # ✅ Forces UI to update immediately!
+    # Payouts adjusted for 97.5% RTP
+    payout_grand = 28.93
+    payout_major = 11.57
+    payout_minor = 3.86
+    payout_mini = 1.54
+
+    # Winning Conditions
+    if middle_row[0] == middle_row[1] == middle_row[2]:  # 3 of a kind
+        if middle_row[0] == "💰":
+            st.session_state.balance += payout_grand * int(st.session_state.bet_multiplier[0])  # Grand Jackpot
+            st.success("🎰 GRAND JACKPOT! 3 Moneybags! 🤑")
+        else:
+            st.session_state.balance += payout_major * int(st.session_state.bet_multiplier[0])  # Major Jackpot
+            st.success("🎉 MAJOR JACKPOT! 3 of a Kind!")
+
+    elif moneybag_count == 2:  # Minor Jackpot
+        st.session_state.balance += payout_minor * int(st.session_state.bet_multiplier[0])
+        st.success("💸 MINOR JACKPOT! 2 Moneybags!")
+
+    elif moneybag_count == 1:  # Mini Jackpot
+        st.session_state.balance += payout_mini * int(st.session_state.bet_multiplier[0])
+        st.success("💵 MINI JACKPOT! 1 Moneybag!")
 
 # Streamlit UI
 st.title("🎰 Slot Machine")
