@@ -46,35 +46,49 @@ st.write(f"📌 Installed Tesseract Languages: `{', '.join(installed_languages)}
 if os.path.exists("/usr/bin/tesseract"):  # Cloud/Linux
     pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
 
-text_on_page = []
 
-# File uploader
+# Upload file
 uploaded_files = st.file_uploader("Upload PDF or Image", type=["pdf", "png", "jpg"], accept_multiple_files=True)
 
-for uploaded_file in uploaded_files:
-    st.write("Filename:", uploaded_file.name)
+if uploaded_files:
+    pdf_writer = PdfWriter()
+    text_on_page = []
 
-    # Handle PDFs
-    if uploaded_file.type == "application/pdf":
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
-            temp_file.write(uploaded_file.read())
-            temp_file_path = temp_file.name  # Get the temporary file path
+    for uploaded_file in uploaded_files:
+        st.write("Processing:", uploaded_file.name)
 
-        # Convert PDF to images
-        images = convert_from_path(temp_file_path)
+        if uploaded_file.type == "application/pdf":
+            # Convert PDF to images
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
+                temp_file.write(uploaded_file.read())
+                temp_file_path = temp_file.name
 
-        # Clean up temporary file
-        os.remove(temp_file_path)
+            images = convert_from_path(temp_file_path)
 
-    # Handle Images
-    elif uploaded_file.type in ["image/png", "image/jpeg"]:
-        img = Image.open(uploaded_file)
+            for image in images:
+                # Perform OCR without saving the file
+                pdf_bytes = pytesseract.image_to_pdf_or_hocr(image, extension='pdf')
+                pdf_reader = PdfReader(io.BytesIO(pdf_bytes))
+                pdf_writer.add_page(pdf_reader.pages[0])
+                text_on_page.append(pdf_reader.pages[0].extract_text())
 
-    #Loop to append images together as pages in a document
-    
-    for image in images:
-        page = pytesseract.image_to_pdf_or_hocr(image, extension='pdf', lang='nld')
-        pdf = PdfReader(io.BytesIO(page))
-        pdf_writer.add_page(pdf.pages[0])
-        text_on_page.append(PdfReader(io.BytesIO(page)).pages[0].extract_text())
+            os.remove(temp_file_path)  # Cleanup
+
+        elif uploaded_file.type in ["image/png", "image/jpeg"]:
+            image = Image.open(uploaded_file)
+            pdf_bytes = pytesseract.image_to_pdf_or_hocr(image, extension='pdf')
+            pdf_reader = PdfReader(io.BytesIO(pdf_bytes))
+            pdf_writer.add_page(pdf_reader.pages[0])
+            text_on_page.append(pdf_reader.pages[0].extract_text())
+
+    # Save the extracted PDF
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as output_pdf:
+        pdf_writer.write(output_pdf)
+        output_pdf_path = output_pdf.name
+
+    # Provide a download link
+    with open(output_pdf_path, "rb") as file:
+        st.download_button("Download OCR PDF", file, file_name="OCR_output.pdf", mime="application/pdf")
+
+    os.remove(output_pdf_path)  # Cleanup
 
