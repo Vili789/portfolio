@@ -116,6 +116,72 @@ with col2:
     if st.button("🔄 Reset Balance"):
         reset_balance()
 
+# CSS for Red Line Through Middle Row
+st.markdown("""
+    <style>
+        .slot-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .slot-table {
+            border-spacing: 10px;
+            margin: auto;
+            width: 400px;
+        }
+        .slot-cell {
+            font-size: 80px;
+            font-weight: bold;
+            text-align: center;
+            background: black;
+            color: white;
+            border: 5px solid gold;
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+        /* Horizontal red line inside the middle row */
+        .middle-row {
+            position: relative;
+        }
+        .middle-row::after {
+            content: "";
+            position: absolute;
+            left: 0%;
+            width: 100%;
+            height: 5px;
+            background-color: red;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Rebuild the slot machine grid dynamically based on `st.session_state.reels`
+html_code = """
+<div class='slot-container'>
+    <table class='slot-table'>
+        <tr>
+            <td class='slot-cell'>{}</td>
+            <td class='slot-cell'>{}</td>
+            <td class='slot-cell'>{}</td>
+        </tr>
+        <tr class='middle-row'>
+            <td class='slot-cell'>{}</td>
+            <td class='slot-cell'>{}</td>
+            <td class='slot-cell'>{}</td>
+        </tr>
+        <tr>
+            <td class='slot-cell'>{}</td>
+            <td class='slot-cell'>{}</td>
+            <td class='slot-cell'>{}</td>
+        </tr>
+    </table>
+</div>
+""".format(*st.session_state.reels[0], *st.session_state.reels[1], *st.session_state.reels[2])
+
 # Display win message below slot machine
 temp_message = st.session_state.win_message
 
