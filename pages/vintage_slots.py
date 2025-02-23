@@ -86,6 +86,10 @@ def spin_reels():
     elif moneybag_count == 1:  # Mini Jackpot
         st.session_state.balance += payout_mini * int(st.session_state.bet_multiplier[0])
         st.success("💵 MINI JACKPOT! 1 Moneybag!")
+        
+    # Update the reels in session state
+    st.session_state.reels = [above_row, middle_row, below_row]
+    st.rerun()  # ✅ Forces UI to update immediately!
 
 # Streamlit UI
 st.title("🎰 Slot Machine")
