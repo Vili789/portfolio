@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import glob
+import requests
 import io
 import pandas as pd
 from PyPDF2 import PdfReader, PdfWriter
