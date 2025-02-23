@@ -86,20 +86,22 @@ def spin_reels():
             win_amount = payout_grand * int(st.session_state.bet_multiplier[0])
             st.session_state.balance += win_amount
             st.session_state.win_message = f"🎰 GRAND JACKPOT! 3 Moneybags! 🤑 +${win_amount}"
+            st.session_state.win_amount = win_amount
         else:
             win_amount = payout_major * int(st.session_state.bet_multiplier[0])
             st.session_state.balance += win_amount
             st.session_state.win_message = f"🎉 MAJOR JACKPOT! 3 of a Kind! +${win_amount}"
+            st.session_state.win_amount = win_amount
     elif moneybag_count == 2:  # Minor Jackpot
         win_amount = payout_minor * int(st.session_state.bet_multiplier[0])
         st.session_state.balance += win_amount
         st.session_state.win_message = f"💸 MINOR JACKPOT! 2 Moneybags! +${win_amount}"
+        st.session_state.win_amount = win_amount
     elif moneybag_count == 1:  # Mini Jackpot
         win_amount = payout_mini * int(st.session_state.bet_multiplier[0])
         st.session_state.balance += win_amount
         st.session_state.win_message = f"💵 MINI JACKPOT! 1 Moneybag! +${win_amount}"
-    
-    st.session_state.win_amount = win_amount
+        st.session_state.win_amount = win_amount
     
     # Update the reels in session state
     st.session_state.reels = [above_row, middle_row, below_row]
