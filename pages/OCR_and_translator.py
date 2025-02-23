@@ -71,9 +71,10 @@ for uploaded_file in uploaded_files:
         img = Image.open(uploaded_file)
 
     #Loop to append images together as pages in a document
-  for image in images:
-    page = pytesseract.image_to_pdf_or_hocr(image, extension='pdf', lang='nld')
-    pdf = PdfReader(io.BytesIO(page))
-    pdf_writer.add_page(pdf.pages[0])
-    text_on_page.append(PdfReader(io.BytesIO(page)).pages[0].extract_text())
+    
+    for image in images:
+        page = pytesseract.image_to_pdf_or_hocr(image, extension='pdf', lang='nld')
+        pdf = PdfReader(io.BytesIO(page))
+        pdf_writer.add_page(pdf.pages[0])
+        text_on_page.append(PdfReader(io.BytesIO(page)).pages[0].extract_text())
 
