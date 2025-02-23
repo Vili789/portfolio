@@ -32,6 +32,10 @@ if "bet_amount" not in st.session_state:
 if "reels" not in st.session_state:
     st.session_state.reels = [["⬜" for _ in range(3)] for _ in range(3)]  # Empty placeholders
 
+# Initialize win_message in session state if it doesn't exist
+if "win_message" not in st.session_state:
+    st.session_state.win_message = ""
+    
 # Function to reset balance
 def reset_balance():
     st.session_state.balance = 100
@@ -70,27 +74,34 @@ def spin_reels():
     payout_minor = 1.5
     payout_mini = 0.5
 
+    # Reset win message
+    st.session_state.win_message = ""
+
     # Winning Conditions
     if middle_row[0] == middle_row[1] == middle_row[2]:  # 3 of a kind
         if middle_row[0] == "💰":
             st.session_state.balance += payout_grand * int(st.session_state.bet_multiplier[0])  # Grand Jackpot
-            st.success("🎰 GRAND JACKPOT! 3 Moneybags! 🤑")
+            st.session_state.win_message = "🎰 GRAND JACKPOT! 3 Moneybags! 🤑"
         else:
             st.session_state.balance += payout_major * int(st.session_state.bet_multiplier[0])  # Major Jackpot
-            st.success("🎉 MAJOR JACKPOT! 3 of a Kind!")
+            st.session_state.win_message = "🎉 MAJOR JACKPOT! 3 of a Kind!"
 
     elif moneybag_count == 2:  # Minor Jackpot
         st.session_state.balance += payout_minor * int(st.session_state.bet_multiplier[0])
-        st.success("💸 MINOR JACKPOT! 2 Moneybags!")
+        st.session_state.win_message = "💸 MINOR JACKPOT! 2 Moneybags!"
 
     elif moneybag_count == 1:  # Mini Jackpot
         st.session_state.balance += payout_mini * int(st.session_state.bet_multiplier[0])
-        st.success("💵 MINI JACKPOT! 1 Moneybag!")
-        
+        st.session_state.win_message = "💵 MINI JACKPOT! 1 Moneybag!"
+
     # Update the reels in session state
     st.session_state.reels = [above_row, middle_row, below_row]
     st.rerun()  # ✅ Forces UI to update immediately!
 
+# Display win message AFTER rerun
+if "win_message" in st.session_state and st.session_state.win_message:
+    st.success(st.session_state.win_message)
+    
 # Streamlit UI
 st.title("🎰 Slot Machine")
 
