@@ -45,11 +45,29 @@ st.write(f"📌 Installed Tesseract Languages: `{', '.join(installed_languages)}
 if os.path.exists("/usr/bin/tesseract"):  # Cloud/Linux
     pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
     
-# 📤 File Uploader
+# File uploader
 uploaded_files = st.file_uploader("Upload PDF or Image", type=["pdf", "png", "jpg"], accept_multiple_files=True)
 
 for uploaded_file in uploaded_files:
-    bytes_data = uploaded_file.read()
-    st.write("filename:", uploaded_file.name)
-    images = convert_from_path(uploaded_file)
-    st.write(images)
+    st.write("Filename:", uploaded_file.name)
+
+    # Handle PDFs
+    if uploaded_file.type == "application/pdf":
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
+            temp_file.write(uploaded_file.read())
+            temp_file_path = temp_file.name  # Get the temporary file path
+
+        # Convert PDF to images
+        images = convert_from_path(temp_file_path)
+
+        # Display images
+        for img in images:
+            st.image(img, caption="Page Preview", use_column_width=True)
+
+        # Clean up temporary file
+        os.remove(temp_file_path)
+
+    # Handle Images
+    elif uploaded_file.type in ["image/png", "image/jpeg"]:
+        img = Image.open(uploaded_file)
+        st.image(img, caption="Uploaded Image", use_column_width=True)
