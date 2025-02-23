@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="My Portfolio", page_icon="👨‍💻", layout="wide")
 
 st.title("👨‍💻 Welcome to My Portfolio")
-st.write("Hello! I'm [Your Name], a software developer. Here are some of my projects:")
+st.write("Hello! My name is Vilmos Kutnyanszky, and I'm expanding my Python skills by developing fun and random projects for anyone to use. Here are some of my projects:")
 
 # Correcting the file paths
 st.page_link("pages/SeeWhoDoesntFollowYou.py", label="📊 Instagram Analyzer")
