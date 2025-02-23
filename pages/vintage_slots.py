@@ -65,10 +65,10 @@ def spin_reels():
     moneybag_count = middle_row.count("💰")
 
     # Payouts adjusted for 97.5% RTP
-    payout_grand = 28.93
-    payout_major = 11.57
-    payout_minor = 3.86
-    payout_mini = 1.54
+    payout_grand = 200
+    payout_major = 8
+    payout_minor = 1.5
+    payout_mini = 0.5
 
     # Winning Conditions
     if middle_row[0] == middle_row[1] == middle_row[2]:  # 3 of a kind
