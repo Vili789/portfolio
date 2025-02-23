@@ -51,4 +51,5 @@ uploaded_files = st.file_uploader("Upload PDF or Image", type=["pdf", "png", "jp
 for uploaded_file in uploaded_files:
     bytes_data = uploaded_file.read()
     st.write("filename:", uploaded_file.name)
-    st.write(bytes_data)
+    images = convert_from_path(uploaded_file)
+    st.write(images)
