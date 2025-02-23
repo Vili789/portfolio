@@ -45,7 +45,9 @@ st.write(f"📌 Installed Tesseract Languages: `{', '.join(installed_languages)}
 # ✅ **Set Tesseract Binary Path**
 if os.path.exists("/usr/bin/tesseract"):  # Cloud/Linux
     pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
-    
+
+text_on_page = []
+
 # File uploader
 uploaded_files = st.file_uploader("Upload PDF or Image", type=["pdf", "png", "jpg"], accept_multiple_files=True)
 
@@ -61,14 +63,17 @@ for uploaded_file in uploaded_files:
         # Convert PDF to images
         images = convert_from_path(temp_file_path)
 
-        # Display images
-        for img in images:
-            st.image(img, caption="Page Preview", use_column_width=True)
-
         # Clean up temporary file
         os.remove(temp_file_path)
 
     # Handle Images
     elif uploaded_file.type in ["image/png", "image/jpeg"]:
         img = Image.open(uploaded_file)
-        st.image(img, caption="Uploaded Image", use_column_width=True)
+
+    #Loop to append images together as pages in a document
+  for image in images:
+    page = pytesseract.image_to_pdf_or_hocr(image, extension='pdf', lang='nld')
+    pdf = PdfReader(io.BytesIO(page))
+    pdf_writer.add_page(pdf.pages[0])
+    text_on_page.append(PdfReader(io.BytesIO(page)).pages[0].extract_text())
+
