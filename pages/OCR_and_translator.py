@@ -51,7 +51,7 @@ uploaded_file = st.file_uploader("Upload PDF or Image", type=["pdf", "png", "jpg
 # 📌 Language selection dropdown
 language_choice = st.selectbox("Select OCR Language", installed_languages, index=0)
 
-if uploaded_files:
+if uploaded_file:
     output_text = []
     
     for uploaded_file in uploaded_files:
