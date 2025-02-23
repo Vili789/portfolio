@@ -20,22 +20,31 @@ if uploaded_files:
     
     for uploaded_file in uploaded_files:
         file_type = uploaded_file.type
-        st.write(f"Processing {uploaded_file.name}...")
-        
-        # Convert images to PDF
+        st.write(f"Processing `{uploaded_file.name}`...")
+
+        # **Step 1: Save the uploaded file to a temporary location**
+        temp_file_path = f"temp_{uploaded_file.name}"
+        with open(temp_file_path, "wb") as temp_file:
+            temp_file.write(uploaded_file.getbuffer())  # Save file to disk
+
         if file_type.startswith("image"):
+            # **Step 2: Convert images to PDF**
             pdf = FPDF()
             pdf.add_page()
-            img = Image.open(uploaded_file)
-            pdf.image(uploaded_file, x=10, y=10, w=190)
-            pdf_file_path = f"{uploaded_file.name}.pdf"
+            img = Image.open(temp_file_path)
+            pdf.image(temp_file_path, x=10, y=10, w=190)
+            pdf_file_path = f"converted_{uploaded_file.name}.pdf"
             pdf.output(pdf_file_path, "F")
             file_path = pdf_file_path
         else:
-            file_path = uploaded_file.name
+            file_path = temp_file_path  # Use the saved PDF file
 
-        # Convert PDF to images
-        images = convert_from_path(file_path)
+        # **Step 3: Convert PDF to images**
+        try:
+            images = convert_from_path(file_path)
+            st.write(f"Converted `{uploaded_file.name}` into images successfully! ✅")
+        except Exception as e:
+            st.error(f"Error converting `{uploaded_file.name}` to images: {e}")
         
         # OCR processing
         pdf_writer = PdfWriter()
