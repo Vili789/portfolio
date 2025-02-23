@@ -53,12 +53,16 @@ language_choice = st.selectbox("Select OCR Language", installed_languages, index
 
 if uploaded_files:
     for uploaded_file in uploaded_files:
-        # ✅ **Check if file is valid**
         if uploaded_file is None:
             st.error("No file uploaded. Please select a file.")
             continue
 
-        file_name = uploaded_file.name
+        # ✅ **Fix for 'bytes' object error**
+        try:
+            file_name = uploaded_file.name  # Works when file is an object
+        except AttributeError:
+            file_name = "uploaded_file.pdf"  # Assign a default name if file is bytes
+
         st.write(f"Processing `{file_name}` using `{language_choice}` OCR...")
 
         # ✅ **Step 1: Save the uploaded file to a temporary location**
