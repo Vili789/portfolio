@@ -12,8 +12,50 @@ from deep_translator import GoogleTranslator
 
 st.title("PDF OCR & Translation")
 
-# File uploader
-uploaded_files = st.file_uploader("Upload PDF or Images", accept_multiple_files=True, type=["pdf", "png", "jpg"])
+# ✅ **Define Tesseract data directory**
+TESSDATA_DIR = "/usr/share/tesseract-ocr/4.00/tessdata/"
+os.environ["TESSDATA_PREFIX"] = TESSDATA_DIR  # Set environment variable
+
+# ✅ **Check available languages**
+installed_languages = os.listdir(TESSDATA_DIR) if os.path.exists(TESSDATA_DIR) else []
+st.write(f"📌 Installed Tesseract Languages: `{', '.join(installed_languages)}`")
+
+# ✅ **Auto-download ALL Tesseract languages if missing**
+if not installed_languages:
+    st.write("🔄 Downloading full Tesseract language dataset... (This may take a while)")
+
+    tessdata_repo = "https://github.com/tesseract-ocr/tessdata/raw/main/"
+    languages = ["eng", "nld", "deu", "fra", "spa", "ita", "por", "rus", "ara", "chi_sim"]  # Add more as needed
+
+    os.makedirs(TESSDATA_DIR, exist_ok=True)
+
+    for lang in languages:
+        lang_path = os.path.join(TESSDATA_DIR, f"{lang}.traineddata")
+        if not os.path.exists(lang_path):
+            url = tessdata_repo + f"{lang}.traineddata"
+            response = requests.get(url, stream=True)
+            if response.status_code == 200:
+                with open(lang_path, "wb") as f:
+                    f.write(response.content)
+                st.write(f"✅ Installed `{lang}` language for Tesseract.")
+            else:
+                st.warning(f"❌ Failed to download `{lang}.traineddata`")
+
+    # Refresh installed languages list
+    installed_languages = os.listdir(TESSDATA_DIR)
+    st.write(f"🎉 Installed Languages: `{', '.join(installed_languages)}`")
+
+# ✅ **Set Tesseract binary path (For Streamlit Cloud)**
+if os.path.exists("/usr/bin/tesseract"):  # Cloud/Linux
+    pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
+else:  # Windows (Local)
+    pytesseract.pytesseract.tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+
+# 📤 File Uploader
+uploaded_file = st.file_uploader("Upload PDF or Image", type=["pdf", "png", "jpg"])
+
+# 📌 Language selection dropdown
+language_choice = st.selectbox("Select OCR Language", installed_languages, index=0)
 
 if uploaded_files:
     output_text = []
