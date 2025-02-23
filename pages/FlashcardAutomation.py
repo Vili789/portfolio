@@ -20,4 +20,5 @@ st.write(
     """
     This will be the page for the Flashcard Automation Tool! It's all under construction for now!
     """)
+st.page_link("pages/OCR_and_translator.py")
     
